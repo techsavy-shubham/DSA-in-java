@@ -1,0 +1,129 @@
+//{ Driver Code Starts
+// Initial Template for Java
+
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+
+class GFG {
+    static class FastReader {
+        BufferedReader br;
+        StringTokenizer st;
+
+        public FastReader() {
+            br = new BufferedReader(new InputStreamReader(System.in));
+        }
+
+        String next() {
+            while (st == null || !st.hasMoreElements()) {
+                try {
+                    st = new StringTokenizer(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
+
+        String nextLine() {
+            String str = "";
+            try {
+                str = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return str;
+        }
+
+        Integer nextInt() { return Integer.parseInt(next()); }
+    }
+
+    public static void main(String[] args) throws IOException {
+        FastReader sc = new FastReader();
+        PrintWriter out = new PrintWriter(System.out);
+        int t = sc.nextInt();
+        while (t-- > 0) {
+            int n = sc.nextInt();
+            String sentences[] = new String[n];
+            int times[] = new int[n];
+            for (int i = 0; i < n; i++) {
+                sentences[i] = sc.nextLine();
+                times[i] = sc.nextInt();
+            }
+            AutoCompleteSystem obj = new AutoCompleteSystem(sentences, times);
+            int q = sc.nextInt();
+            for (int i = 0; i < q; i++) {
+                String query = sc.nextLine();
+                StringBuilder qq = new StringBuilder();
+                for (int j = 0; j < query.length(); j++) {
+                    char x = query.charAt(j);
+                    qq.append(String.valueOf(x));
+                    ArrayList<String> suggestions = obj.input(x);
+                    if (x == '#') continue;
+                    out.print("Typed : \"" + qq.toString() + "\" , Suggestions: \n");
+                    for (String y : suggestions) out.print(y + "\n");
+                }
+            }
+        }
+        out.flush();
+    }
+}
+// } Driver Code Ends
+
+
+// User function Template for Java
+class WordFreq{
+    String sentence;
+    int frequency;
+     public WordFreq(String s,int f){
+         sentence=s;
+         frequency=f;
+     }
+    
+}
+class AutoCompleteSystem {
+    HashMap<String,Integer>[] array;//Declare an array of hashMap objects
+    String currentString="";
+    public AutoCompleteSystem(String sentences[], int times[]) {
+        array=new HashMap[26];//Allocate the array memory,a size 0f 26 hashmaps
+        for(int index=0;index<26;index++){
+            array[index]=new HashMap<String,Integer>();//Initializing every index of index of array with HashMap object
+        }
+        for(int index=0;index<sentences.length;index++){//Mapping every sentence to the corresponding hashmap in the array
+            array[sentences[index].charAt(0)-'a']//Getting the hashmap index in the array ,whose index number correspond to starting character of sentence.
+            .put(sentences[index],times[index]);//Then saving the sentence with frequency in the hashmap
+            
+        }
+        
+    }
+   
+    ArrayList<String> input(char c) {
+        ArrayList<String> result=new ArrayList();
+        if(c=='#'){//Means sentence has ended 
+            array[currentString.charAt(0)-'a']//Getting the hashmap index to the current string first character
+            .put(currentString,array[currentString.charAt(0)-'a']//Putting the current string in hashMap,if not present or else the available key ,value will be updated
+            .getOrDefault(currentString,0)+1);//Getting the value of current string if present or else if new current string added,0 value will be extracted,and will be inremented by 1.
+            currentString="";
+        }
+        else{
+            currentString+=c;//Adding character to current string
+            List<WordFreq> list=new ArrayList();//Creating list for saving objects with members sentence and frequency
+            for(String key:array[currentString.charAt(0)-'a'].keySet()){//Getting all the strings starting with first letter of current string
+                if(key.indexOf(currentString)==0){//Checking for every collected string,which matches current string
+                    list.add(new WordFreq(key,array[currentString.charAt(0)-'a'].get(key)));//if conditon is true,we add the key with its corresponding frequency
+                }
+            }
+            list.sort((a,b)->{//Here we sort the list,in descending order on basis of frequency
+                if(a.frequency!=b.frequency){
+                    return Integer.compare(b.frequency,a.frequency);
+                }
+                return a.sentence.compareTo(b.sentence);//if the two sentences have same frequency,then the sentences are arranged lexicographically(alphabetically)
+            });
+            for(int i=0;i<Math.min(3,list.size());i++){
+             result.add(list.get(i).sentence);//Addingl atmost 3 sentences and atleast any number of sentences
+            }
+            
+        }
+        return result;
+    }
+}
