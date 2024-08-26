@@ -1,0 +1,31 @@
+public class Solution {
+    public static void symmetry(int n) {
+        // Write your code here
+        int na=n;
+        int nb=0;
+        for(int i=1;i<=n*2;i++){
+            if(i==n+1){//for second half of the pattern
+                na=1;
+                nb-=2;
+            }
+            for(int j=1;j<=na;j++){
+                System.out.print("*"+" ");
+            }
+            for(int k=1;k<=nb;k++){
+                System.out.print(" ");
+            }
+            for(int l=1;l<=na;l++){
+                System.out.print("*"+" ");
+            }
+            if(i>n){//For second half of pattern
+                na++;
+                nb-=2;
+                System.out.println();
+            }
+            if(i<=n){//For first half of pattern
+            nb+=2;
+            na--;
+            System.out.println();}
+        }
+    }
+}

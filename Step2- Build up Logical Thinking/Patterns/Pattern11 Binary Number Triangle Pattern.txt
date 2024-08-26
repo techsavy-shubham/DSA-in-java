@@ -1,0 +1,16 @@
+public class Solution {
+    public static void nBinaryTriangle(int n) {
+        // Write your code here.
+        String sb="";
+        for(int i=1;i<=n;i++){
+            if(i%2!=0){//For odd rows we will add 1.And we will add it before the current string,as we can see 
+            //for every line the no.1 and 0 is added before
+                sb=1+" "+sb;
+            }
+            else{//And for even rows we will be adding 0 as we can see in pattern
+                sb=0+" "+sb;
+            }
+            System.out.println(sb);
+        }
+    }
+}

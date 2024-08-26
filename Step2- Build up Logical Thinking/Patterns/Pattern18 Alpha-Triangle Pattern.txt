@@ -1,0 +1,16 @@
+public class Solution {
+    public static void alphaTriangle(int n) {
+        // Write your code here
+        char character='A';
+        character+=n-1;
+        char temp=character;
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=i;j++){
+                System.out.print(character+" ");
+                character--;
+            }
+            character=temp;
+            System.out.println();
+        }
+    }
+}

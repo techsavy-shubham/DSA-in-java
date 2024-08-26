@@ -1,0 +1,41 @@
+public class Solution {
+    public static void nStarDiamond(int n) {
+        // Write your code here
+        int nb=n-1;//Number of blank spaces in first statement
+        int na=1;//Number of astreik in first statement
+        for(int i=1;i<=n;i++){//This loop will print the first half of the pattern i.e a erect pattern
+            for(int j=1;j<=nb;j++){
+                System.out.print(" ");
+            }
+            for(int k=1;k<=na;k++){
+                System.out.print("*");
+            }
+            // for(int l=1;l<=nb;l++){
+            //     System.out.print(" ");
+            // }
+            System.out.println();
+            nb--;
+            na+=2;
+        }
+        System.out.println("The value of nb is: "+nb);
+        System.out.println("The value of na is: "+na);
+        nb=0;//Changing values accordingly for printing below inverted pattern
+        na=-2;
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=nb;j++){
+                System.out.print(" ");
+            }
+            for(int k=1;k<=na;k++){
+                System.out.print("*");
+            }
+            // for(int l=1;l<=nb;l++){
+            //     System.out.print(" ");
+            // }
+            System.out.println();
+            nb++;
+            na-=2;
+        }
+        
+        
+    }
+}
