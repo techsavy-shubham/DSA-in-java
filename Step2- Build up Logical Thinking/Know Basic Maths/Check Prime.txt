@@ -1,0 +1,23 @@
+public class Solution {
+	public static String isPrime(int num) {
+		//Your code goes here
+		boolean isPrime=true;
+		int c=2;
+		while(c*c<=num){
+			if(num%c==0){
+				isPrime=false;
+				break;
+			}
+			c++;
+		}
+		if(num==1){//Exception for number 1,as its not Prime
+			return "NO";
+		}
+		if(isPrime){
+			return "YES";
+		}
+		else{
+             return "NO";
+		}
+	}
+}
